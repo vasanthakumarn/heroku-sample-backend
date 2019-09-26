@@ -7,27 +7,29 @@ const outputFileName = 'Sample2';
 const extend='.pdf';
 
 server.get('/', (request: express.Request, response: express.Response) => {
-	const enterPath = path.join(__dirname, ${outputFileName}.docx);
-       const outputPath = path.join(__dirname, ${outputFileName}.pdf);
+	const randomName = new Date().getTime();
+	const enterPath = path.join(__dirname, '..',`${outputFileName}.docx`);
+       const outputPath = path.join(__dirname, `${randomName}.pdf`);
        const readEnterPath = fs.readFileSync(enterPath);
+	   console.log('READ ENTER PATH ', readEnterPath);
 	
 	libreOfficeConvert.convert(readEnterPath, extend, undefined, (err: any, result: any) => {
            console.log('libreOfficeConvert....');
            if (err) {
-               console.log(Error converting file: ${err});
+               console.log(`Error converting file: ${err}`);
                return  {filePath: '', pdfFileName: ''};
            }
            console.log('result.....', result);
            if (result) {
-               fs.writeFileSync(path.resolve(__dirname , ${outputFileName}.pdf), result);
+               fs.writeFileSync(path.resolve(__dirname , `${randomName}.pdf`), result);
                console.log('__dirname   ', __dirname);
-               console.log('outputFileName   ', outputFileName);
+               console.log('outputFileName   ', randomName);
                return response.status(200).sendFile(outputPath, '',  (error: any) => {
                    if (error) {
                        console.log(error);
                    } else {
-                       fs.unlinkSync(${__dirname}\\${outputFileName}.docx);
-                       fs.unlinkSync(${__dirname}\\${outputFileName}.pdf);
+                       /*fs.unlinkSync(`${__dirname}\\${outputFileName}.docx`);
+                       fs.unlinkSync(`${__dirname}\\${outputFileName}.pdf`);*/
                    }
                });
            } else {
