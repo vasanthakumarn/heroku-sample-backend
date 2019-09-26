@@ -37,7 +37,6 @@ server.get('/', (request: express.Request, response: express.Response) => {
 			   response.status(200).send('hello world - sample-heroku!!!');
            }
        });
-	
     //response.status(200).send('hello world - sample-heroku!!!');
 });
 console.log('Server is listening...');
