@@ -11,7 +11,7 @@ const extend='.pdf';
 server.get('/', (request: express.Request, response: express.Response) => {
 	const randomName = new Date().getTime();
 	const enterPath = path.join(__dirname, '..',`${outputFileName}.docx`);
-       const outputPath = path.join(__dirname, `${outputFileName}.pdf`);
+       const outputPath = path.join(__dirname, '..', `${outputFileName}.pdf`);
        const readEnterPath = fs.readFileSync(enterPath);
 	   console.log('READ ENTER PATH ', readEnterPath);
 	
@@ -21,11 +21,11 @@ server.get('/', (request: express.Request, response: express.Response) => {
                console.log(`Error converting file: ${err}`);
                return  {filePath: '', pdfFileName: ''};
            }
-           console.log('result.....', result);
+           console.log('result.....', outputPath);
            if (result) {
                //fs.writeFileSync(path.resolve(__dirname , `${randomName}.pdf`), result);
                console.log('__dirname   ', __dirname);
-               console.log('outputFileName   ', randomName);
+               console.log('outputPath   ', outputPath);
                return response.status(200).sendFile(outputPath, '',  (error: any) => {
                    if (error) {
                        console.log(error);
