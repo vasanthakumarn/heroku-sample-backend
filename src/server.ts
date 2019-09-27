@@ -11,7 +11,7 @@ const extend='.pdf';
 server.get('/', (request: express.Request, response: express.Response) => {
 	const randomName = new Date().getTime();
 	const enterPath = path.join(__dirname, '..',`${outputFileName}.docx`);
-       const outputPath = path.join(__dirname, `${randomName}.pdf`);
+       const outputPath = path.join(__dirname, `${outputFileName}.pdf`);
        const readEnterPath = fs.readFileSync(enterPath);
 	   console.log('READ ENTER PATH ', readEnterPath);
 	
