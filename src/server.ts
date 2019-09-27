@@ -15,7 +15,7 @@ server.get('/', (request: express.Request, response: express.Response) => {
        const readEnterPath = fs.readFileSync(enterPath);
 	   console.log('READ ENTER PATH ', readEnterPath);
 	
-	const child = exec(`soffice --headless --convert-to pdf --outdir ${__dirname} ${enterPath}`, (err: any, result: any) => {
+	const child = exec(`soffice --headless --convert-to pdf --outdir . ${enterPath}`, (err: any, result: any) => {
            console.log('libreOfficeConvert....');
            if (err) {
                console.log(`Error converting file: ${err}`);
