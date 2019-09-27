@@ -1,5 +1,7 @@
 import express = require('express');
 const libreOfficeConvert = require('libreoffice-convert');
+const exec = require('child_process').exec;
+
 const fs = require('fs');
 const path = require('path');
 const server = express();
@@ -13,7 +15,7 @@ server.get('/', (request: express.Request, response: express.Response) => {
        const readEnterPath = fs.readFileSync(enterPath);
 	   console.log('READ ENTER PATH ', readEnterPath);
 	
-	libreOfficeConvert.convert(readEnterPath, extend, undefined, (err: any, result: any) => {
+	const child = exec(`soffice --headless --convert-to pdf --outdir ${__dirname} ${enterPath}`, (err: any, result: any) => {
            console.log('libreOfficeConvert....');
            if (err) {
                console.log(`Error converting file: ${err}`);
@@ -21,7 +23,7 @@ server.get('/', (request: express.Request, response: express.Response) => {
            }
            console.log('result.....', result);
            if (result) {
-               fs.writeFileSync(path.resolve(__dirname , `${randomName}.pdf`), result);
+               //fs.writeFileSync(path.resolve(__dirname , `${randomName}.pdf`), result);
                console.log('__dirname   ', __dirname);
                console.log('outputFileName   ', randomName);
                return response.status(200).sendFile(outputPath, '',  (error: any) => {
